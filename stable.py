@@ -5,6 +5,13 @@ import os
 import string
 from itertools import product
 character_set = string.ascii_letters + string.digits + string.punctuation + ' ' # Get character set
+def is_performance_mode():
+  performance_mode = False
+  user_choice = input("Enable ultra performance mode? (Disables dynamic progress display, highly recommended.) (Y/N): ")
+  if user_choice == 'Y':
+    performance_mode = True
+  return performance_mode
+
 def main():
     combination_count = 0
     minimum_length = int(input("Enter the minimum length: ")) # Get minimum and maximum length to generate
@@ -32,6 +39,7 @@ def get_combination_count(minimum_length, maximum_length):
     current_length = current_length + 1
   return combination_count
 def brute_force(minimum_length, maximum_length):
+  performance_mode = is_performance_mode()
   combination_count = get_combination_count(minimum_length, maximum_length)  # Get combination count
   current_length = minimum_length
   while current_length <= maximum_length:
@@ -47,7 +55,8 @@ def brute_force(minimum_length, maximum_length):
       combination_counter = combination_counter + 1
       combination_percentage = round(float((combination_counter/combination_count) * 100), 2)
       log.write(f'{new_combination}\n')
-      print(f"Time elapsed: [{datetime.now() - starting_date_and_time}] | {new_combination}  ({combination_percentage}% complete)", end = '\r') # Output progress
+      if performance_mode == False:
+        print(f"Time elapsed: [{datetime.now() - starting_date_and_time}] | {new_combination}  ({combination_percentage}% complete)", end = '\r') # Output progress
     ending_date_and_time = datetime.now() # Output end date and time
     timer_stop = perf_counter()
     log.write(f"<< Combination generation ended on: {ending_date_and_time} for combinations of length {current_length} >>\n") # Log and output ending date and time
@@ -56,7 +65,7 @@ def brute_force(minimum_length, maximum_length):
     time_elapsed = timer_stop - timer_start # Get elapsed time for generation
     current_length = current_length + 1
   print(f"Printed {combination_count} combinations with time elapsed: {time_elapsed}") # Display final results
-  print(f"Average speed: {int(combination_count/time_elapsed)} words per second") # Display final speed for benchmarking
+  print(f"Average speed: {int(combination_count/time_elapsed)} combinations per second") # Display final speed for benchmarking
   log.close()
   redo = input("Generate again? (Y/N): ")
   if redo == 'Y':
