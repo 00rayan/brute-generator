@@ -1,5 +1,5 @@
 from datetime import datetime
-from datetime import time
+from datetime import date
 from time import perf_counter
 import os
 import string
@@ -10,6 +10,10 @@ def is_performance_mode():
   user_choice = input("Enable ultra performance mode? (Disables dynamic progress display, highly recommended.) (Y/N): ")
   if user_choice == 'Y':
     performance_mode = True
+  elif user_choice == 'N':
+    performance_mode = False
+  else:
+    print("Invalid input.")
   return performance_mode
 
 def main():
@@ -39,6 +43,7 @@ def get_combination_count(minimum_length, maximum_length):
     current_length = current_length + 1
   return combination_count
 def brute_force(minimum_length, maximum_length):
+  log_count = 1
   performance_mode = is_performance_mode()
   combination_count = get_combination_count(minimum_length, maximum_length)  # Get combination count
   current_length = minimum_length
@@ -46,12 +51,13 @@ def brute_force(minimum_length, maximum_length):
     combination_counter = 0 # To count how many combinations have been generated
     starting_date_and_time = datetime.now()
     timer_start = perf_counter()
-    title = open('generated.txt','a') # Log and output starting date and time
-    title.write(f'<< Combination generation started on: {starting_date_and_time} for combinations of length {current_length} >>\n')
-    title.close()
+    log_date = date.today()
+    log_name = f"{log_date}"
+    log = open(f'{log_name}.txt','a') # Log and output starting date and time
+    log.write(f'<< Combination generation started on: {starting_date_and_time} for combinations of length {current_length} >>\n')
     print(f"[{starting_date_and_time}] Combination generation of length {current_length} started.")
-    log = open('generated.txt','a')
     for new_combination in (''.join(x) for x in product(character_set, repeat=current_length)): # Generate combination
+      log_name = f"{log_date}-log{log_count}"
       combination_counter = combination_counter + 1
       combination_percentage = round(float((combination_counter/combination_count) * 100), 2)
       log.write(f'{new_combination}\n')
