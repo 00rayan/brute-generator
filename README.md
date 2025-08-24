@@ -16,4 +16,3 @@ so in order for max accuracy the benchmarking feature runs AFTER max and min len
 for the benchmark to not take as long as the full generation, a **boolean** named benchmark must be added to the normal bruteforce function as a parameter to specify, which makes it only generate 100 combinations or so, per length.
 then the function takes the max and minimum length as parameters and runs the brute force function with the added parameter of benchmark
 eg. for benchmark of generation minimum length 1, max 5, the function brute_force(1,5,True) is ran, and it calculates and returns the final speed. in the main function the total amount of combinations is divided by
----
