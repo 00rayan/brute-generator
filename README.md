@@ -1,7 +1,7 @@
-# brute-force combination generator
+## brute-force combination generator
 this program generates every single possible character combination in the ASCII character set with the specified character length(s), and stores all in a text file.  
 ---
-## Benchmarking Feature
+### Benchmarking Feature
 so in order for max accuracy the benchmarking feature runs AFTER max and min length are inputted.
 for the benchmark to not take as long as the full generation, a **boolean** named benchmark must be added to the normal bruteforce function as a parameter to specify, which makes it only generate 100 combinations or so, per length.
 then the function takes the max and minimum length as parameters and runs the brute force function with the added parameter of benchmark
